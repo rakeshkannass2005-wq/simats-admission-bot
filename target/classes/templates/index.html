@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMATS ENGINEERING Admission Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            /* SIMATS background image only; semi-transparent overlay added for text contrast */
+            background: url('/images/simats-bg.jpg.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 80px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* dark overlay layer over background to improve text visibility */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: -1;
+        }
+
+        /* Professional Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: white;
+            font-size: 1.3em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            opacity: 0.8;
+        }
+
+        .nav-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1200px;
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .college-logo {
+            max-width: 140px;
+            display: block;
+            margin: 0 auto 20px;
+            animation: fadeInZoom 1s ease-out 0.2s both;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .college-logo:hover {
+            transform: scale(1.05);
+        }
+
+        @media (min-width: 768px) {
+            .header {
+                flex-direction: row;
+                gap: 30px;
+                justify-content: center;
+            }
+
+            .header h1 {
+                margin: 0;
+            }
+
+            .header .tagline {
+                margin-top: 0;
+            }
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            color: #ffffff;
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+
+        .header .tagline {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-weight: 500;
+            color: #e0e0e0;
+            letter-spacing: 0.5px;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .features-section {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInLeft 1s ease-out 0.3s both;
+        }
+
+        .features-section h2,
+        .feature-item h3,
+        .feature-item p {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+        }
+
+        .features-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #ffffff;
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+
+        .feature-item {
+            display: flex;
+            margin-bottom: 25px;
+            align-items: flex-start;
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:nth-child(2) { animation-delay: 0.4s; }
+        .feature-item:nth-child(3) { animation-delay: 0.5s; }
+        .feature-item:nth-child(4) { animation-delay: 0.6s; }
+        .feature-item:nth-child(5) { animation-delay: 0.7s; }
+        .feature-item:nth-child(6) { animation-delay: 0.8s; }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5em;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+            transform: scale(1.1);
+        }
+
+        .feature-text h3 {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #ffffff;
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+
+        .feature-text p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+            color: #f0f0f0;
+        }
+
+        .chat-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 550px;
+            animation: fadeInRight 1s ease-out 0.3s both;
+            transition: all 0.3s ease;
+        }
+
+        .chat-section:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-bottom: none;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .chat-header h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+
+        .chat-header p {
+            font-size: 0.9em;
+            opacity: 0.95;
+            color: #e0e0e0;
+            letter-spacing: 0.3px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px;
+            background: rgba(248, 249, 251, 0.95);
+        }
+
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            animation: fadeInMessage 0.4s ease-out;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 0.95em;
+            line-height: 1.6;
+            word-wrap: break-word;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .message.bot .message-content {
+            background: linear-gradient(135deg, #e8ecf1 0%, #dfe5eb 100%);
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .message-time {
+            font-size: 0.75em;
+            opacity: 0.5;
+            margin-top: 6px;
+            padding: 0 4px;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            gap: 12px;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ededf0 100%);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 50px;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .chat-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 14px 0;
+            font-size: 0.95em;
+            font-family: inherit;
+            outline: none;
+            color: #333;
+            transition: all 0.2s ease;
+        }
+
+        .chat-input::placeholder {
+            color: #999;
+            transition: color 0.2s ease;
+        }
+
+        .input-wrapper:focus-within .chat-input::placeholder {
+            color: #bbb;
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 200% 200%;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-weight: 600;
+        }
+
+        .send-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+            background-position: 100% 100%;
+        }
+
+        .send-button:active {
+            transform: scale(0.95);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 0.95em;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 100px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .header .tagline {
+                font-size: 1em;
+            }
+
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .features-section {
+                order: 2;
+                margin-top: 20px;
+                padding: 20px;
+            }
+
+            .chat-section {
+                order: 1;
+                height: auto;
+                min-height: 450px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .chat-messages {
+                padding: 20px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #764ba2 0%, #667eea 100%);
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            width: 100%;
+            margin-top: 60px;
+            padding: 50px 40px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            animation: fadeInUp 0.8s ease-out;
+            color: white;
+        }
+
+        .contact-section h2 {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #ffffff;
+            font-family: 'Poppins', 'Inter', sans-serif;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:nth-child(1) { animation-delay: 0.2s; }
+        .contact-item:nth-child(2) { animation-delay: 0.3s; }
+        .contact-item:nth-child(3) { animation-delay: 0.4s; }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .contact-item h3 {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: #ffffff;
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+
+        .contact-item p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+
+        .contact-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .contact-item a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .contact-section {
+                margin-top: 40px;
+                padding: 30px 20px;
+            }
+
+            .contact-section h2 {
+                font-size: 1.8em;
+                margin-bottom: 30px;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .contact-item {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Professional Navigation Bar -->
+<nav>
+    <a href="#" class="nav-logo">
+        <img src="/images/simats-logo.png" alt="SIMATS Logo">
+        <span>SIMATS</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#admission">Admission</a></li>
+        <li><a href="#chat">Chat Support</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="main-container">
+    <div class="header">
+        <!-- college logo; put the file simats-logo.png under src/main/resources/static/images -->
+        <img src="/images/simats-logo.png" alt="SIMATS ENGINEERING Logo" class="college-logo" />
+        <h1>SIMATS ENGINEERING Admission Bot</h1>
+        <p class="tagline">Your Intelligent College Admission Guide</p>
+    </div>
+
+    <div class="content-wrapper" id="admission">
+        <div class="features-section" id="programs">
+            <h2>Why Choose Us?</h2>
+
+            <div class="feature-item">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-text">
+                    <h3>AI-Powered Responses</h3>
+                    <p>Instant, accurate answers powered by advanced AI technology</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">📚</div>
+                <div class="feature-text">
+                    <h3>Comprehensive Information</h3>
+                    <p>Detailed guidance on courses, fees, eligibility, and admissions process</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🎓</div>
+                <div class="feature-text">
+                    <h3>Expert Guidance</h3>
+                    <p>Personalized recommendations based on your academic profile</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">⏰</div>
+                <div class="feature-text">
+                    <h3>24/7 Availability</h3>
+                    <p>Get answers anytime, anywhere - no waiting required</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">💡</div>
+                <div class="feature-text">
+                    <h3>Smart Recommendations</h3>
+                    <p>Tailored program suggestions matching your interests</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-section" id="chat">
+            <div class="chat-header">
+                <h3>SIMATS Admission Bot</h3>
+                <p>Ask anything about admissions, programs, or campus life at SIMATS ENGINEERING</p>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div>
+                        <div class="message-content">
+                            👋 Welcome to the SIMATS ENGINEERING Admission Bot! I'm here to help you navigate your college admission journey. Feel free to ask me anything about our programs, admission requirements, fees, campus facilities, or any other questions you have.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <form id="chatForm" style="display: flex; gap: 10px; width: 100%;">
+                    <div class="input-wrapper">
+                        <input type="text" name="message" class="chat-input" placeholder="Type your question here..." required />
+                    </div>
+                    <button type="submit" class="send-button">➤</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section" id="contact">
+        <h2>Get In Touch</h2>
+        <div class="contact-content">
+            <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <h3>Email</h3>
+                <p>Have questions? We're here to help!</p>
+                <a href="mailto:simatsenginnering@gmail.com">simatsenginnering@gmail.com</a>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-icon">📞</span>
+                <h3>Phone</h3>
+                <p>Call us during business hours</p>
+                <a href="tel:+916381764550">+91 6381764550</a>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-icon">📍</span>
+                <h3>Address</h3>
+                <p>Visit our campus</p>
+                <p style="color: #d0d0d0; font-size: 0.9em; margin-bottom: 0;">SIMATS ENGINEERING<br>Saveetha Nagar, Thandalam<br>Chennai 602105</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatForm = document.getElementById("chatForm");
+    const chatMessages = document.getElementById("chatMessages");
+
+    chatForm.addEventListener("submit", function (e) {
+
+        e.preventDefault(); // 🚫 Stop redirect
+
+        const input = chatForm.querySelector("input[name='message']");
+        const userMessage = input.value.trim();
+        if (!userMessage) return;
+
+        // Show user message
+        const userDiv = document.createElement("div");
+        userDiv.className = "message user";
+        userDiv.innerHTML = `
+            <div>
+                <div class="message-content">${userMessage}</div>
+            </div>
+        `;
+        chatMessages.appendChild(userDiv);
+
+        // Send to backend without page reload
+        fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "message=" + encodeURIComponent(userMessage)
+        })
+        .then(response => response.text())
+        .then(data => {
+
+            const botDiv = document.createElement("div");
+            botDiv.className = "message bot";
+            botDiv.innerHTML = `
+                <div>
+                    <div class="message-content">${data}</div>
+                </div>
+            `;
+            chatMessages.appendChild(botDiv);
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+        input.value = "";
+    });
+
+});
+</script>
+
+</body>
+</html>
