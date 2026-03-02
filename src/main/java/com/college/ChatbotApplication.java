@@ -18,46 +18,49 @@ public class ChatbotApplication {
     CommandLineRunner loadData(CourseRepository repo) {
         return args -> {
 
-            // ================= COMPUTER SCIENCE =================
-            repo.save(new Course("Computer Science", "B.Tech CSE"));
-            repo.save(new Course("Computer Science", "B.Tech CSE - AI & ML"));
-            repo.save(new Course("Computer Science", "B.Tech CSE - Data Science"));
-            repo.save(new Course("Computer Science", "B.Tech CSE - Cyber Security"));
-            repo.save(new Course("Computer Science", "M.Tech CSE"));
+            // Insert only if database is empty
+            if (repo.count() == 0) {
 
-            // ================= MECHANICAL =================
-            repo.save(new Course("Mechanical", "B.Tech Mechanical Engineering"));
-            repo.save(new Course("Mechanical", "M.Tech Thermal Engineering"));
-            repo.save(new Course("Mechanical", "M.Tech CAD/CAM"));
+                // ================= COMPUTER SCIENCE =================
+                repo.save(new Course("Computer Science", "B.Tech CSE"));
+                repo.save(new Course("Computer Science", "B.Tech CSE - AI & ML"));
+                repo.save(new Course("Computer Science", "B.Tech CSE - Data Science"));
+                repo.save(new Course("Computer Science", "B.Tech CSE - Cyber Security"));
+                repo.save(new Course("Computer Science", "M.Tech CSE"));
 
-            // ================= ELECTRICAL =================
-            repo.save(new Course("Electrical", "B.Tech EEE"));
-            repo.save(new Course("Electrical", "M.Tech Power Systems"));
+                // ================= MECHANICAL =================
+                repo.save(new Course("Mechanical", "B.Tech Mechanical Engineering"));
+                repo.save(new Course("Mechanical", "M.Tech Thermal Engineering"));
+                repo.save(new Course("Mechanical", "M.Tech CAD/CAM"));
 
-            // ================= ELECTRONICS =================
-            repo.save(new Course("Electronics", "B.Tech ECE"));
-            repo.save(new Course("Electronics", "B.Tech ECE - VLSI"));
-            repo.save(new Course("Electronics", "M.Tech VLSI Design"));
+                // ================= ELECTRICAL =================
+                repo.save(new Course("Electrical", "B.Tech EEE"));
+                repo.save(new Course("Electrical", "M.Tech Power Systems"));
 
-            // ================= CIVIL =================
-            repo.save(new Course("Civil", "B.Tech Civil Engineering"));
-            repo.save(new Course("Civil", "M.Tech Structural Engineering"));
+                // ================= ELECTRONICS =================
+                repo.save(new Course("Electronics", "B.Tech ECE"));
+                repo.save(new Course("Electronics", "B.Tech ECE - VLSI"));
+                repo.save(new Course("Electronics", "M.Tech VLSI Design"));
 
-            // ================= IT =================
-            repo.save(new Course("Information Technology", "B.Tech IT"));
-            repo.save(new Course("Information Technology", "M.Tech IT"));
+                // ================= CIVIL =================
+                repo.save(new Course("Civil", "B.Tech Civil Engineering"));
+                repo.save(new Course("Civil", "M.Tech Structural Engineering"));
 
-            // ================= MBA =================
-            repo.save(new Course("Management", "MBA - Finance"));
-            repo.save(new Course("Management", "MBA - Marketing"));
-            repo.save(new Course("Management", "MBA - HR"));
+                // ================= IT =================
+                repo.save(new Course("Information Technology", "B.Tech IT"));
+                repo.save(new Course("Information Technology", "M.Tech IT"));
 
-            // ================= BBA =================
-            repo.save(new Course("Management", "BBA"));
+                // ================= MBA =================
+                repo.save(new Course("Management", "MBA - Finance"));
+                repo.save(new Course("Management", "MBA - Marketing"));
+                repo.save(new Course("Management", "MBA - HR"));
 
-            // ================= BCA =================
-            repo.save(new Course("Computer Applications", "BCA"));
-            repo.save(new Course("Computer Applications", "MCA"));
+                // ================= BBA =================
+                repo.save(new Course("Management", "BBA"));
+
+                // ================= BCA =================
+                repo.save(new Course("Computer Applications", "BCA"));
+                repo.save(new Course("Computer Applications", "MCA"));
+            }
         };
-    }
-}
+    }}
