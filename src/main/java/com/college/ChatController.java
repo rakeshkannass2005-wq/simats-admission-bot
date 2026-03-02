@@ -123,7 +123,17 @@ public class ChatController {
         }
 
         // ================= DEFAULT =================
-
+        else if (message.contains("program") || message.contains("programs")) {
+            return "We offer programs in:<br><br>" +
+                   "• Computer Science<br>" +
+                   "• Mechanical Engineering<br>" +
+                   "• Civil Engineering<br>" +
+                   "• Electrical Engineering<br>" +
+                   "• Electronics<br>" +
+                   "• Management (MBA, BBA)<br>" +
+                   "• Computer Applications (BCA, MCA)<br><br>" +
+                   "Type a department name to see courses.";
+        }
         else {
             return "Sorry, I didn't understand.<br><br>" +
                     "You can ask about:<br>" +
